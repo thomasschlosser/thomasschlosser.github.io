@@ -21,6 +21,6 @@ Ca o paranteză, Propark Adventure e o competiţie cu caracter montan ce înglob
 
 Secţiunea Eco Challenge reprezintă tura lungă a traseului, cu o distanţă aproximată între 180-250 km şi timp limită de 50 ore. Harta cu punctele de control ce trebuie atinse este înmânată participanţilor cu numai 12 ore înainte de start, iar traseul nu este impus, fiecare echipă fiind liberă să îşi aleagă potecile pe care să ajungă la destinaţii. Echipele sunt formate din 4 persoane, minim o fată. Mai multe detalii pe http://propark-adventure.ro/ .
 
-{% include gallery1 %}
+{% include gallery id="gallery1" %}
 
 După ce ne dezmeticim puţin, mâncăm, mai aruncăm fiecare câte ceva în sacul pe care organizatorii îl duc în postul 7 (tranziție de la bike la trekking) și mergem către start.
