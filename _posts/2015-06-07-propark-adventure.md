@@ -1,7 +1,7 @@
 ---
 title: "PROPARK ADVENTURE 2015"
 header:
-  image: /assets/images/DSC_3550.jpg
+  image: /assets/images/propark-adventure/DSC_3550.jpg
   caption: "Photo credit: Radu Diaconescu"
 tags: 
   - outdoor
@@ -54,8 +54,8 @@ gallery12:
     image_path: /assets/images/propark-adventure/DSC_3916.jpg
     alt: ""
 gallery13:
-  - url: /assets/images/propark-adventure/capture81.jpg
-    image_path: /assets/images/propark-adventure/capture81.jpg
+  - url: /assets/images/propark-adventure/capture81.png
+    image_path: /assets/images/propark-adventure/capture81.png
     alt: ""
 gallery14:
   - url: /assets/images/propark-adventure/DSC_3955.jpg
@@ -66,8 +66,8 @@ gallery15:
     image_path: /assets/images/propark-adventure/10257572_946703305381424_496377924981176847_o.jpg
     alt: ""
 gallery16:
-  - url: /assets/images/propark-adventure/capture4.jpg
-    image_path: /assets/images/propark-adventure/capture4.jpg
+  - url: /assets/images/propark-adventure/capture4.png
+    image_path: /assets/images/propark-adventure/capture4.png
     alt: ""
 gallery17:
   - url: /assets/images/propark-adventure/DSC_4015.jpg
@@ -82,8 +82,8 @@ gallery19:
     image_path: /assets/images/propark-adventure/DSC_4026.jpg
     alt: ""
 gallery20:
-  - url: /assets/images/propark-adventure/capture9.jpg
-    image_path: /assets/images/propark-adventure/capture9.jpg
+  - url: /assets/images/propark-adventure/capture9.png
+    image_path: /assets/images/propark-adventure/capture9.png
     alt: ""
 gallery21:
   - url: /assets/images/propark-adventure/11391116_1023741597643532_3453409163951087431_n.jpg
