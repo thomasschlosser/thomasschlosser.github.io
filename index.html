@@ -1,7 +1,39 @@
----
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-layout: home
-author_profile: true
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SchlosserZone</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+          $("#navigation").load("navigation.html");
+        });
+    </script>
+</head>
+
+<style>
+    body {
+        background: url('images/home/DSC05202.JPG') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+</style>
+
+<body>
+<div id="navigation"></div>
+
+<div class="container pt-5">
+    <blockquote class="blockquote text-center">
+        <p><em>The man on top of the mountain didn't fall there.</em></p>
+        <footer class="blockquote-footer">Vince Lombardi</footer>
+    </blockquote>
+</div>
+</body>
+</html>
