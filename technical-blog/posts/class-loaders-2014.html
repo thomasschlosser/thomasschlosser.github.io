@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SchlosserZone</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+          $("#navigation").load("../../navigation.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="navigation"></div>
+
+<div class="container pt-5">
+
+    <h1>Class loaders</h1>
+
+    <h6 class="text-secondary">29 January 2014</h6>
+
+    <p>In Java, every class needs to be loaded before it can be used.</p>
+    <p>The class loader (which is part of JVM) is responsible for finding and loading the java classes.</p>
+    <p>A class loading is made once, at its first use.</p>
+    <p><strong>Classes are uniquely identified by their fully qualified name and by the class loader which loaded
+        them.</strong></p>
+    <p>Popular exceptions caused by the class loading: <code class="text-dark">ClassNotFoundException,
+        ClassCastException, NoClassDefFoundError.</code></p>
+
+    <br/>
+
+    <h5 class="text-primary">Default class loaders hierarchy of the JVM</h5>
+
+    <div>
+        There are 3 class loaders used when the JVM is started:
+        <ol><code class="text-dark">
+            <li>Bootstrap class loader</li>
+            <li>Extensions class loader</li>
+            <li>System class loader</li>
+        </code></ol>
+    </div>
+
+    <h6 class="text-primary"><em>Bootstrap class loader</em></h6>
+    <ul>
+        <li>loads the core java libraries located in <code class="text-dark">&lt;JAVA_HOME&gt;/jre/lib</code></li>
+        <li>is written in native code</li>
+    </ul>
+
+    <h6 class="text-primary"><em>Extensions class loader</em></h6>
+    <ul>
+        <li>loads the java libraries located in <code class="text-dark">&lt;JAVA_HOME&gt;/jre/lib/ext</code>, or any
+            other directory specified by the <code class="text-dark">java.ext.dirs</code> system property
+        </li>
+    </ul>
+
+    <h6 class="text-primary"><em>System class loader</em></h6>
+    <ul>
+        <li>loads classes found on system property <code class="text-dark">java.class.path</code> (which by default is
+            the current directory; you can change the value by using the <code class="text-dark">-classpath</code> or
+            <code class="text-dark">-cp</code> command-line options, or setting the <code class="text-dark">CLASSPATH
+            </code> environment variable. The command-line options override the setting of the <code
+                    class="text-dark">CLASSPATH</code> environment variable)
+        </li>
+        <p><span class="text-warning">* Tomcat ignores this rule</span> (see <a
+                href="http://tomcat.apache.org/tomcat-7.0-doc/class-loader-howto.html">http://tomcat.apache.org/tomcat-7
+            .0-doc/class-loader-howto.html</a>) </p>
+    </ul>
+
+    <div class="text-center">
+        <img class="img-fluid" src="../images/class-loaders.jpg"/>
+    </div>
+
+    <h5 class="text-primary">Parent delegation model</h5>
+
+    <p> Each class loader has a "parent" class loader (besides the bootstrap class loader which is the root). When
+        creating a class loader, if there isn't specified its parent, the system class loader will become its parent
+        class loader.</p>
+
+    When loading a class, the <code class="text-dark">ClassLoader</code> does the next actions:
+    <ol>
+        <li>If a class has already been loaded, it returns it (from cache)</li>
+        <li>Otherwise, it delegates the search for the new class to the parent class loader (to avoid loading
+            the same class multiple times which causes <code class="text-dark">ClassCastException</code>)
+        </li>
+        <li>If the parent class loader does not find the class, <code class="text-dark">loadClass</code> method calls
+            <code class="text-dark">findClass</code> method in order to find and load the class
+        </li>
+    </ol>
+
+    <br/>
+
+    <h5 class="text-primary">Role of the Thread context ClassLoader and how it can be used</h5>
+
+    <p> Let's take some examples.</p>
+
+    <p><strong>First example. <i>Logging</i></strong></p>
+
+    <p>Bootstrap class loader loads the java libraries (located in <code class="text-dark">jre/lib</code>) =><code
+            class="text-dark">java.util.logging.Logger</code> is loaded by Bootstrap class loader.<br/> This logger
+        can use <i>internationalization</i>.</p>
+
+    <p> The <i>resource bundle</i> to be used is loaded by the System class loader.<br/> The Bootstrap class
+        loader is not able to load the resource bundle, so the <code class="text-dark">Logger</code> class needs
+        to use the class loader of the application; more precisely, the class loader of the current thread:
+        <code class="text-dark">ClassLoader cl = Thread.currentThread().getContextClassLoader();</code></p>
+
+    <p><strong>A second example. <i>Spring</i></strong></p>
+
+    <p> Spring is used for managing beans. Let's say that Spring library is kept under <code class="text-dark">tomcat/lib</code>.
+        Those classes are loaded by the <i>common</i> tomcat class loader.</p>
+
+    <p> For each web application in <code class="text-dark">webapp</code> folder, a new class loader is created. This
+        class loader loads the classes in <code class="text-dark">WEB-INF/classes</code> and <code class="text-dark">
+            WEB-INF/lib</code>.<br/> => Normally, Spring cannot see those classes because they were loaded by a
+        different class loader.</p><p>In order to solve those issues, Java introduced the <code class="text-dark">
+            Thread.currentThread().getContextClassLoader()</code> which can get the application's class loader and
+        use it for loading the classes in <code class="text-dark">WEB-INF/classes</code> or <code class="text-dark">
+            WEB-INF/lib</code>.</p>
+
+    <br/>
+
+    <h5 class="text-primary">Loading, Linking and Initialization of classes</h5>
+    <p> Java Language Specification, <i>Execution</i> chapter is one of the best materials to read for this subject: <a
+            href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html" target="_blank">https://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html</a>
+    </p>
+
+    <br/>
+
+    <h5>References:</h5>
+    <div>
+        <ul>
+            <li><a href="http://en.wikipedia.org/wiki/Java_Classloader">http://en.wikipedia.org/wiki/Java_Classloader</a></li>
+            <li><a href="http://docs.oracle.com/javase/tutorial/ext/basics/load.html">http://docs.oracle.com/javase/tutorial/ext/basics/load.html</a>
+            </li>
+            <li><a href="http://www.onjava.com/pub/a/onjava/2004/06/30/classloader2.html">http://www.onjava.com/pub/a/onjava/2004/06/30/classloader2.html</a>
+            </li>
+            <li><a href="http://www.javaworld.com/javaworld/jw-10-1996/jw-10-indepth.html">http://www.javaworld.com/javaworld/jw-10-1996/jw-10-indepth.html</a>
+            </li>
+            <li><a href="http://tech-tauk.blogspot.ro/2009/08/thread-context-classloader-buddy.html">http://tech-tauk.blogspot.ro/2009/08/thread-context-classloader-buddy.html</a>
+            </li>
+            <li>
+                <a href="http://stackoverflow.com/questions/1771679/difference-between-threads-context-class-loader-and-normal-classloader">http://stackoverflow.com/questions/1771679/difference-between-threads-context-class-loader-and-normal-classloader</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+
+<script src="../../images.js"></script>
+
+<script>
+    displayImages(1);
+</script>
+
+</html>

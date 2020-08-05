@@ -52,7 +52,7 @@ function displayImage(imageNumber) {
     // Inserting the code block to wrapper element
     document.getElementById(imageNumber + 'div').innerHTML = codeBlock1;
 
-    var image = '../../images/' + imageLocation;
+    var image = '../../outdoor-blog/images/' + imageLocation;
     document.getElementById(imageNumber).src = image;
     document.getElementById(imageNumber + 'ModalDisplay').src = image;
 }
